@@ -1,0 +1,103 @@
+import java.time.Year
+
+// Базовый класс User
+open class User(
+    open val name: String,
+    open val salary: Double
+) {
+    open fun getSalary(): Double = salary
+}
+
+// Задание 1: Класс Animal
+class Animal(
+    val name: String,
+    val weight: Double
+) {
+    fun getName(): String = name
+}
+
+// Задание 2: Класс Client
+class Client(
+    val name: String,
+    val age: Int
+) {
+    fun getAge(): Int = age
+}
+
+// Задание 3: Класс Book
+class Book(
+    val title: String,
+    val author: String,
+    val pages: Int,
+    val genre: String
+) {
+    fun getBookInfo(): String {
+        return "$title: $author, $genre, $pages стр."
+    }
+}
+
+// Задание 4: Класс LibraryUser, наследующий от User
+class LibraryUser(
+    override val name: String,
+    val surname: String,
+    var booksBorrowed: Int
+) : User(name, 0.0) {
+
+    fun getFullName(): String = "$name $surname"
+
+    fun returnBook(bookReturned: Int) {
+        if (bookReturned <= 0) {
+            println("Количество возвращаемых книг должно быть положительным!")
+            return
+        }
+        booksBorrowed -= bookReturned
+        if (booksBorrowed < 0) {
+            booksBorrowed = 0
+            println("Количество книг на руках не может быть отрицательным. Установлено значение 0.")
+        } else {
+            println("Возвращено $bookReturned книг. Теперь на руках: $booksBorrowed")
+        }
+    }
+
+    fun displayBorrowedBooks() {
+        println("У $getFullName() на руках $booksBorrowed книг")
+    }
+
+    override fun getSalary(): Double {
+        println("У библиотекарей нет зарплаты в этой программе")
+        return 0.0
+    }
+}
+
+fun main() {
+    // Задание 1: Animal
+    println("=== Задание 1: Animal ===")
+    val animal = Animal("Барсик", 5.5)
+    println("Имя животного: ${animal.getName()}")
+
+    // Задание 2: массив Client
+    println("\n=== Задание 2: Client ===")
+    val clients = arrayOf(
+        Client("Анна", 25),
+        Client("Иван", 30),
+        Client("Мария", 22)
+    )
+    for (client in clients) {
+        println("Клиент: ${client.name}, Возраст: ${client.getAge()}")
+    }
+
+    // Задание 3: Book
+    println("\n=== Задание 3: Book ===")
+    val book = Book("Война и мир", "Лев Толстой", 1300, "Роман")
+    println(book.getBookInfo())
+
+    // Задание 4: LibraryUser
+    println("\n=== Задание 4: LibraryUser ===")
+    val libraryUser = LibraryUser("Петр", "Иванов", 5)
+    println("Полное имя: ${libraryUser.getFullName()}")
+    libraryUser.displayBorrowedBooks()
+    libraryUser.returnBook(2)
+    libraryUser.displayBorrowedBooks()
+    libraryUser.returnBook(10) // пытаемся вернуть больше, чем есть
+    libraryUser.displayBorrowedBooks()
+}

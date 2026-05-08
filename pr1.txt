@@ -1,0 +1,91 @@
+import kotlin.math.abs
+import java.time.Year
+
+fun main() {
+    // Задание 1: Даны два числа. Вывести, являются ли они равными.
+    println("=== Задание 1 ===")
+    try {
+        println("Введите первое число:")
+        val num1 = readLine()?.toDoubleOrNull()
+        println("Введите второе число:")
+        val num2 = readLine()?.toDoubleOrNull()
+
+        if (num1 == null || num2 == null) {
+            println("Ошибка: введите корректные числа!")
+        } else {
+            if (num1 == num2) {
+                println("Числа равны")
+            } else {
+                println("Числа не равны")
+            }
+        }
+    } catch (e: Exception) {
+        println("Ошибка ввода: ${e.message}")
+    }
+
+    // Задание 2: Дана сумма зарплаты. Вывести сумму уплаченного налога на доходы физических лиц (13%).
+    println("\n=== Задание 2 ===")
+    try {
+        println("Введите сумму зарплаты:")
+        val salary = readLine()?.toDoubleOrNull()
+
+        if (salary == null || salary < 0) {
+            println("Ошибка: зарплата должна быть положительным числом!")
+        } else {
+            val tax = salary * 0.13
+            println("Сумма налога (13%): %.2f".format(tax))
+        }
+    } catch (e: Exception) {
+        println("Ошибка: ${e.message}")
+    }
+
+    // Задание 3: Дан год рождения. Вывести возраст 5 лет назад.
+    println("\n=== Задание 3 ===")
+    try {
+        println("Введите год рождения:")
+        val birthYear = readLine()?.toIntOrNull()
+        val currentYear = Year.now().value
+
+        if (birthYear == null || birthYear < 1900 || birthYear > currentYear) {
+            println("Ошибка: введите корректный год рождения (1900-${currentYear})!")
+        } else {
+            val age5YearsAgo = (currentYear - birthYear) - 5
+            if (age5YearsAgo < 0) {
+                println("5 лет назад человек ещё не родился")
+            } else {
+                println("Возраст 5 лет назад: $age5YearsAgo лет")
+            }
+        }
+    } catch (e: Exception) {
+        println("Ошибка: ${e.message}")
+    }
+
+    // Задание 4: Дано количество подъездов, этажей и квартир на этаже. Вывести номер подъезда для заданного номера квартиры
+    println("\n=== Задание 4 ===")
+    try {
+        println("Введите количество подъездов:")
+        val entrances = readLine()?.toIntOrNull()
+        println("Введите количество этажей:")
+        val floors = readLine()?.toIntOrNull()
+        println("Введите количество квартир на этаже:")
+        val flatsPerFloor = readLine()?.toIntOrNull()
+        println("Введите номер квартиры:")
+        val flatNumber = readLine()?.toIntOrNull()
+
+        if (entrances == null || floors == null || flatsPerFloor == null || flatNumber == null ||
+            entrances <= 0 || floors <= 0 || flatsPerFloor <= 0 || flatNumber <= 0) {
+            println("Ошибка: все значения должны быть положительными числами!")
+        } else {
+            val flatsPerEntrance = floors * flatsPerFloor
+            val entranceNumber = (flatNumber - 1) / flatsPerEntrance + 1
+
+            if (entranceNumber > entrances) {
+                println("Ошибка: квартиры с номером $flatNumber нет в этом доме!")
+            } else {
+                println("Квартира №$flatNumber находится в подъезде №$entranceNumber")
+            }
+        }
+    } catch (e: Exception) {
+        println("Ошибка: ${e.message}")
+    }
+}
